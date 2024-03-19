@@ -7,7 +7,7 @@ HM.PlayerSpawn = function(player)
 end
 addHook("PlayerSpawn", HM.PlayerSpawn)
 
-HM.doSpecialVfx(player)
+HM.doSpecialVfx = function(player)
 	player.mo.state = S_PLAY_SPECIAL
 	
 	local px, py, pz = player.realmo.x, player.realmo.y, player.realmo.z + (player.realmo.height/2)
@@ -20,6 +20,9 @@ end
 HM.PlayerThink = function(player)
 	player.sp = $ or 0
 	if HM.valid(player.mo) then
+		local func = S[player.mo.skin] and S[player.mo.skin].hyper or S[-1].hyper
+		if func then func(player) end
+
 		if player.sp >= 100 and player.sp_history != 100 then
 			S_StartSound(player.realmo, sfx_ready)
 		end
@@ -30,8 +33,17 @@ HM.PlayerThink = function(player)
 			player.sp = $-100
 			player.usedspecial = 1
 			S_StartSound(player.realmo, sfx_spc1)
-			local voice = S[player.mo.skin] and S[player.mo.skin].s1 or S[-1].s1
+			local voice = S[player.mo.skin] and S[player.mo.skin].warcry or S[-1].warcry
+			if voice and type(voice) == "table" and #voice then
+    			voice = voice[P_RandomRange(1, #voice)]
+			end
 			if voice then S_StartSound(player.realmo, voice) end
+			local auxsounds = S[player.mo.skin] and S[player.mo.skin].auxsounds or S[-1].auxsounds
+			if auxsounds then
+				for sound=1, #auxsounds do
+					S_StartSound(player.realmo, auxsounds[sound])
+				end
+			end
 			HM.doSpecialVfx(player)
 		end
 		
@@ -52,11 +64,11 @@ end
 addHook("PlayerThink", HM.PlayerThink)
 
 local barColor, specialStatus, specialColor
-local charDisplayX, charDisplayY, displaySpeed = 0 -- !!! TURN INTO PLAYER VARIABLES !!!
+local charDisplayX, charDisplayY, displaySpeed = 0 -- TODO: TURN INTO PLAYER VARIABLES !!!
 local commonFlags = V_SNAPTOBOTTOM|V_SNAPTOLEFT|V_PERPLAYER|V_HUDTRANSDOUBLE
 
 local function specialMeter(d, p)
-	if HM.valid(p) and HM.valid(p.mo) and p.sp != nil then --and (p == displayplayer)?
+	if HM.valid(p) and HM.valid(p.mo) and p.sp != nil then
 		
 		--sp meter
 		if p.sp >= 100 and not (leveltime % 3 == 0) then
@@ -64,19 +76,22 @@ local function specialMeter(d, p)
 		else
 			barColor = 130
 		end
+		local meter = p.mo.state == S_PLAY_SPECIAL and 100 or p.sp
 		d.drawFill(82, 186-0, 100/2, 6, commonFlags|138)
 		d.drawFill(82, 186-1, 100/2, 2, commonFlags|139)
-		d.drawFill(82, 186-0, p.sp/2, 6, commonFlags|barColor+1)
-		d.drawFill(82, 186-1, p.sp/2, 2, commonFlags|barColor)
+		d.drawFill(82, 186-0, meter/2, 6, commonFlags|barColor+1)
+		d.drawFill(82, 186-1, meter/2, 2, commonFlags|barColor)
 		
 		--text
 		if p.sp and p.sp >= 100 then specialStatus = "WEAPON CHANGE!" else specialStatus = "" end
-		if (leveltime % 10 >= 5) then specialColor = V_SKYMAP else specialColor = 0 end
+		if (leveltime % 3 == 0) then specialColor = V_SKYMAP else specialColor = 0 end
 		d.drawString(50, 185, specialStatus, V_PERPLAYER|specialColor, "thin")
 		
+		if paused or not p == displayplayer then return end
+
 		--screen tint during special		
 		if p.mo.state == S_PLAY_SPECIAL then
-			if (leveltime % 2 == 0) then
+			if (leveltime % 3 == 0) then
 				d.drawScaled(0, -40*FRACUNIT, 82033, d.cachePatch("BGA0"), V_70TRANS|V_SNAPTOLEFT|V_SNAPTOTOP, d.getColormap(nil, p.skincolor))
 			else
 				d.drawScaled(320*FRACUNIT, -40*FRACUNIT, 82033, d.cachePatch("BGA0"), V_80TRANS|V_SNAPTORIGHT|V_SNAPTOTOP|V_FLIP, d.getColormap(nil, p.skincolor))
