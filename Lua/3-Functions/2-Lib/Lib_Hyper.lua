@@ -67,7 +67,7 @@ local barColor, specialStatus, specialColor
 local charDisplayX, charDisplayY, displaySpeed = 0 -- TODO: TURN INTO PLAYER VARIABLES !!!
 local commonFlags = V_SNAPTOBOTTOM|V_SNAPTOLEFT|V_PERPLAYER|V_HUDTRANSDOUBLE
 
-local function specialMeter(d, p)
+HM.specialMeter = function(d, p)
 	if HM.valid(p) and HM.valid(p.mo) and p.sp != nil then
 		
 		--sp meter
@@ -115,4 +115,4 @@ local function specialMeter(d, p)
 		d.draw(charDisplayX, charDisplayY+40, d.getSprite2Patch(p.realmo.skin, SPR2_XTRA, false, B), V_HUDTRANSHALF, d.getColormap(TC_RAINBOW, p.skincolor))
 	end
 end
-hud.add(specialMeter, "game")
+hud.add(HM.specialMeter, "game")
