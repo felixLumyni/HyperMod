@@ -75,7 +75,7 @@ HM.autop = function(target, inflictor, source, damage, damagetype)
 			if AST_ADD
 				UHOH.blendmode = AST_ADD
 			end
-			if MT_BATTLESHIELD then
+			if CBW_Battle and MT_BATTLESHIELD then
 				local sh = P_SpawnMobjFromMobj(target,0,0,0, MT_BATTLESHIELD)
 				sh.target = target
 			end
