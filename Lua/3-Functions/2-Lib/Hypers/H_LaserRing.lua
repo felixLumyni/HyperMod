@@ -20,6 +20,7 @@ HM.LaserRing = function(player)
 		mobjinfo[MT_REDRING].seesound = oldseesound
 		local dummy
 		for i = 0, 255 do
+			if not hitscan then break end
 			hitscan.flags = ($|MF_NOBLOCKMAP)
 			if P_RailThinker(hitscan) then
 				if HM.valid(hitscan) then 
