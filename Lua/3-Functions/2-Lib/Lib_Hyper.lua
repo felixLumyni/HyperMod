@@ -87,7 +87,7 @@ HM.specialMeter = function(d, p)
 		if (leveltime % 3 == 0) then specialColor = V_SKYMAP else specialColor = 0 end
 		d.drawString(50, 185, specialStatus, V_PERPLAYER|specialColor, "thin")
 		
-		if paused or not p == displayplayer then return end
+		if paused or not(p == displayplayer) then return end
 
 		--screen tint during special		
 		if p.mo.state == S_PLAY_SPECIAL then
