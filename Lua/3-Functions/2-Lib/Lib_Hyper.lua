@@ -76,16 +76,18 @@ HM.specialMeter = function(d, p)
 		else
 			barColor = 130
 		end
+		local x=82
+		local y=186
 		local meter = p.mo.state == S_PLAY_SPECIAL and 100 or p.sp
-		d.drawFill(82, 186-0, 100/2, 6, commonFlags|138)
-		d.drawFill(82, 186-1, 100/2, 2, commonFlags|139)
-		d.drawFill(82, 186-0, meter/2, 6, commonFlags|barColor+1)
-		d.drawFill(82, 186-1, meter/2, 2, commonFlags|barColor)
+		d.drawFill(x, y-0, 100/2, 6, commonFlags|138)
+		d.drawFill(x, y-1, 100/2, 2, commonFlags|139)
+		d.drawFill(x, y-0, meter/2, 6, commonFlags|barColor+1)
+		d.drawFill(x, y-1, meter/2, 2, commonFlags|barColor)
 		
 		--text
 		if p.sp and p.sp >= 100 then specialStatus = "WEAPON CHANGE!" else specialStatus = "" end
 		if (leveltime % 3 == 0) then specialColor = V_SKYMAP else specialColor = 0 end
-		d.drawString(50, 185, specialStatus, V_PERPLAYER|specialColor, "thin")
+		d.drawString(x, y-10, specialStatus, commonFlags|specialColor, "thin")
 		
 		if paused or not(p == displayplayer) then return end
 
