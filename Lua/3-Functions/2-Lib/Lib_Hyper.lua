@@ -87,7 +87,7 @@ HM.specialMeter = function(d, p)
 		--text
 		if p.sp and p.sp >= 100 then specialStatus = "WEAPON CHANGE!" else specialStatus = "" end
 		if (leveltime % 3 == 0) then specialColor = V_SKYMAP else specialColor = 0 end
-		d.drawString(x, y-10, specialStatus, commonFlags|specialColor, "thin")
+		d.drawString(x, y-9, specialStatus, commonFlags|specialColor, "thin")
 		
 		if paused or not(p == displayplayer) then return end
 
