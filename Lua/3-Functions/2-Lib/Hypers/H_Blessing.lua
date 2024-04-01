@@ -25,8 +25,8 @@ HM.Blessing = function(player)
 				P_DamageMobj(p.mo, mo, mo, 1)
 			end
 			S_StartSound(sfx_god)
-			p.amyhudflash = TICRATE
 		end
+		HM.amyhudflash = 100
 	end
 end
 
@@ -69,43 +69,33 @@ end
 --bruh
 
 HM.amyhud = function(v, player, cam)
-	local patch = v.cachePatch("VIGNETT") --TODO: correct string
-	local flags = V_SNAPTOLEFT|V_SNAPTOTOP
-	local colormap = v.getColormap(TC_DEFAULT, SKINCOLOR_BLACK)
-	local opacity = 0
-	if player.amyhudflash or player.amyhudflashintensity then
-		if player.amyhudflashintensity then
-			--i am so hecking lazy i know
-			if player.amyhudflashintensity < 35 then opacity = V_10TRANS end
-			if player.amyhudflashintensity < 32 then opacity = V_20TRANS end
-			if player.amyhudflashintensity < 28 then opacity = V_30TRANS end
-			if player.amyhudflashintensity < 24 then opacity = V_40TRANS end
-			if player.amyhudflashintensity < 20 then opacity = V_50TRANS end
-			if player.amyhudflashintensity < 16 then opacity = V_60TRANS end
-			if player.amyhudflashintensity < 12 then opacity = V_70TRANS end
-			if player.amyhudflashintensity < 8 then opacity = V_80TRANS end
-			if player.amyhudflashintensity < 4 then opacity = V_90TRANS end
-		end
+	if HM.higherthan(HM.amyhudflash, 0) then
+		local flags = V_SNAPTOLEFT|V_SNAPTOTOP
+		local opacity = HM.amyhudflash and HM.TimeTrans(HM.amyhudflash) or 0
+		local idk = 98032 -- height is 720?
 		if (v.height() == 1200) or (v.height() == 800) or (v.height() == 400) or (v.height() == 200) then
-			v.drawScaled(0, -40*FRACUNIT, 65355, patch, flags|opacity, colormap)
+			idk = 65355
 		elseif (v.height() == 1080) then
-			v.drawScaled(0, -40*FRACUNIT, 82033, patch, flags|opacity, colormap)
-		else --720?
-			v.drawScaled(0, -40*FRACUNIT, 98032, patch, flags|opacity, colormap)
+			idk = 82033
 		end
+		--finally do the drawing
+		local patch = v.cachePatch("GOD")
+		v.drawScaled(0, -40*FRACUNIT, idk, patch, flags|opacity, colormap)
 	end
 end
 hud.add(HM.amyhud, "game")
 
---AAA
-
 HM.amyhudflash = function(player)
-	player.amyhudflashintensity = $ or 0
-	if player.amyhudflash then
-		player.amyhudflash = $-1
-		player.amyhudflashintensity = min(36,$+1)
-	else
-		if leveltime % 2 == 0 then player.amyhudflashintensity = max(0,$-1) end
+	if HM.higherthan(HM.amyhudflash, 0) then
+		HM.amyhudflash = $-2
 	end
 end
-addHook("PlayerThink", HM.amyhudflash)
+addHook("ThinkFrame", HM.amyhudflash)
+
+local function shiftNumbersForward(nums) --TODO
+    local lastNum = nums[#nums]
+    for i = #nums, 2, -1 do
+        nums[i] = nums[i - 1]
+    end
+    nums[1] = lastNum
+end

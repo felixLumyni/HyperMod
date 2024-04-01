@@ -78,19 +78,13 @@ HM.TimeTrans = function(time, speed)
 end
 
 HM.inahud = function(v, player, cam)
-	if player.inazumahudflash or player.inazumahudflash then	
+	if player.inazumahudflash then	
 		local patch_prefix = "KYS"
 		local frames = {A,B,silvahorn and C or D, E, F}
 		local silvahorn = Inazuma and Inazuma.CheckSilverhorns(player)
 		local flags = V_SNAPTOLEFT|V_SNAPTOTOP
 		local colormap = player.inazumahudflashsource and v.getColormap(TC_DEFAULT, player.inazumahudflashsource.skincolor) or v.getColormap(TC_DEFAULT, SKINCOLOR_CERULEAN)
 		local opacity = player.inazumahudflash and HM.TimeTrans(player.inazumahudflash) or 0
-		local idk = 98032 -- height is 720?
-		if (v.height() == 1200) or (v.height() == 800) or (v.height() == 400) or (v.height() == 200) then
-			idk = 65355
-		elseif (v.height() == 1080) then
-			idk = 82033
-		end
 		local idk = 98032 -- height is 720?
 		if (v.height() == 1200) or (v.height() == 800) or (v.height() == 400) or (v.height() == 200) then
 			idk = 65355

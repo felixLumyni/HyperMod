@@ -12,7 +12,7 @@ freeslot(
     ,"sfx_dig1","sfx_dig2","sfx_pnch" --xtra
     --tornado
     ,"sfx_as1","sfx_as2","sfx_as3"
-    ,"sfx_twrl1","sfx_twrl2","sfx_god" --xtra
+    ,"sfx_twrl1","sfx_twrl2","sfx_god","SKINCOLOR_GOD" --xtra
     --bombus
     ,"sfx_fs1","sfx_fs2","sfx_fs3"
     ,"sfx_lsr1","sfx_lsr2","sfx_lsr3" --xtra
