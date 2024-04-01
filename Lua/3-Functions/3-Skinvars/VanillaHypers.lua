@@ -2,17 +2,17 @@ local HM = hypermod
 local S = HM.SkinVars
 
 S[-1] = {
-	--hyper=nil,
 	hyper=HM.SonicSpeed,
 	warcry=0,
 	auxsounds={sfx_spc1},
-	spcost=100, --TODO
-	broadcast=true, --TODO
+	--spcost=100, --TODO
+	--broadcast=true, --TODO
 	hypergraphic=nil,
 }
 S["sonic"] = {
 	hyper=HM.SonicSpeed,
 	warcry={sfx_ssx1,sfx_ssx2},
+	auxsounds={sfx_spc5},
 	hypergraphic="XTRASS",
 }
 S["tails"] = {
@@ -22,11 +22,12 @@ S["tails"] = {
 S["knuckles"] = {
 	hyper=HM.TakeThis,
 	warcry=sfx_kx1,
+	auxsounds={sfx_spc5},
 }
 S["amy"] = {
 	hyper=HM.Blessing,
 	warcry={sfx_as1,sfx_as2},
-	auxsounds={sfx_spc1,sfx_lsr2}
+	auxsounds={sfx_spc7,sfx_lsr2}
 }
 S["fang"] = {
 	hyper=HM.LaserRing,

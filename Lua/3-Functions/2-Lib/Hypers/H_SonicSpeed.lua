@@ -25,7 +25,11 @@ HM.DoSonicSpeed = function(player)
 		return
 	end
 	if HM.higherthan(mo.sonicspeed, 0) then	
-		player.powers[pw_sneakers] = max($,mo.sonicspeed)
+		if player.stt and mo.skin == "surge" then
+			player.stt.fullcharge = true
+		else
+			player.powers[pw_sneakers] = max($,mo.sonicspeed)
+		end
 		mo.eflags = $|MFE_FORCESUPER
 		player.sp = min(99,mo.sonicspeed/7)
 		mo.sonicspeed = $-1
@@ -89,7 +93,7 @@ HM.autop = function(target, inflictor, source, damage, damagetype)
 	and source
 	and target.player
 	and HM.higherthan(target.sonicspeed, 0)
-	and not target.player.powers[pw_flashing]
+	and not (target.player.powers[pw_flashing] or target.skin == "surge")
 	then
 		if P_IsObjectOnGround(target) then
 			-- SFX

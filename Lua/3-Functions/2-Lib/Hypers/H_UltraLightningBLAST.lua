@@ -63,7 +63,7 @@ end
 
 
 
---bruh
+--sike
 
 HM.inahud = function(v, player, cam)
 	if player.inazumahudflash then	
