@@ -22,6 +22,8 @@ freeslot(
     --edgelord
     ,"sfx_shsx1"
     ,"sfx_spear","sfx_tstp" --xtra
+    --other
+    ,"sfx_bru"
 )
 
 --LMAO

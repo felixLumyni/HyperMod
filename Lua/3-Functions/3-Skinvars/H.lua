@@ -36,3 +36,9 @@ S["heavy"] = {
 	warcry=sfx_pipe,
 	auxsounds={sfx_spc5}
 }
+
+S["necoarc"] = {
+	hyper=HM.LaserRing,
+	warcry=sfx_bru,
+	auxsounds={sfx_lsr1,sfx_lsr2},
+}
