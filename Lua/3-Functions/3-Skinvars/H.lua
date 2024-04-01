@@ -36,13 +36,3 @@ S["heavy"] = {
 	warcry=sfx_pipe,
 	auxsounds={sfx_spc5}
 }
-
-S["mighty"] = {
-	hyper=HM.FalconPunch,
-	warcry=nil,
-	auxsounds={sfx_spc2}
-}
-
---TODO: eggman: HM.brakify
---TODO: eggette: HM.eggify
---TODO: blaze: HM.firetornado
