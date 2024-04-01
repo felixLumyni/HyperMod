@@ -16,7 +16,14 @@ HM.SonicSpeed = function(player)
 			mo.state = S_PLAY_JUMP
 		end
 	end
+end
 
+--pointless hook to account for char switch!!
+HM.DoSonicSpeed = function(player)
+	local mo = player.mo
+	if player.playerstate or not HM.valid(mo) then
+		return
+	end
 	if HM.higherthan(mo.sonicspeed, 0) then	
 		player.sp = min(99,mo.sonicspeed/7)
 		mo.sonicspeed = $-1
@@ -29,7 +36,7 @@ HM.SonicSpeed = function(player)
 		g.momy = $ + FixedMul(mo.scale, P_RandomFixed()*spd - P_RandomFixed()*spd)
 		g.momz = $ + FixedMul(mo.scale, P_RandomFixed()*spd - P_RandomFixed()*spd)/2
 		g.scale = mo.scale
-		if player.pflags & PF_THOKKED then
+		if mo.state == S_PLAY_JUMP and player.pflags & PF_THOKKED and not player.actionstate then
 			player.justthokked = 3
 			player.pflags = $ &~ PF_THOKKED
 		else
@@ -53,6 +60,7 @@ HM.SonicSpeed = function(player)
 		end
 	end
 end
+addHook("PlayerThink", HM.DoSonicSpeed)
 
 HM.autop = function(target, inflictor, source, damage, damagetype)
 	if target
@@ -90,7 +98,7 @@ HM.autop = function(target, inflictor, source, damage, damagetype)
 				P_SetObjectMomZ(inflictor,thrust)
 				if CBW_Battle then
 					if twodlevel then thrust = CBW_Battle.TwoDFactor($) end
-					CBW_Battle.DoPlayerTumble(inflictor.player, 45, angle, inflictor.scale*3, true, true) --no stunbreak
+					CBW_Battle.DoPlayerTumble(inflictor.player, 45, target.angle, inflictor.scale*3, true, true) --no stunbreak
 				end
 			elseif inflictor then
 				P_DamageMobj(inflictor,target,target)

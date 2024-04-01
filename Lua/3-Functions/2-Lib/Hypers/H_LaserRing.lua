@@ -6,13 +6,20 @@ HM.LaserRing = function(player)
 	if not HM.valid(mo) then
 		return
 	end
-
+	
 	if player.usedspecial and not (mo.state == S_PLAY_SPECIAL) then
 		mo.lasering = 2*TICRATE
 		player.usedspecial = 0
 		S_StartSound(player.realmo, sfx_lsr3)
 	end
-	
+end
+
+--oh boy oh boy more pointless hooks to account for char switch!!
+HM.DoLaserRing = function(player)
+	local mo = player.mo
+	if not HM.valid(mo) then
+		return
+	end
 	if HM.higherthan(mo.lasering, 0) and not player.playerstate then
 		local oldseesound = mobjinfo[MT_REDRING].seesound
 		mobjinfo[MT_REDRING].seesound = 0
@@ -46,6 +53,9 @@ HM.LaserRing = function(player)
 		if mo.target then A_Boss1Laser(mo, MT_LASER, 3) end
 		mo.state = mo.state == S_PLAY_FIRE and S_PLAY_STND or S_PLAY_FIRE
 		if mo.state == S_PLAY_FIRE then S_StartSound(mo, sfx_corkp) end
+		if mo.skin == "metalsonic" then --TEMPORARY!! PLS DELETE LATER
+			mo.state = S_PLAY_SPRING
+		end
 		P_Thrust(mo, player.drawangle, -mo.scale/3)
 		P_SetObjectMomZ(mo, mo.scale, false)
 		mo.lasering = max(0, $-1)
@@ -80,7 +90,9 @@ HM.LaserRing = function(player)
 		P_StartQuake(9*FRACUNIT, 2)
 	end
 end
+addHook("PlayerThink", HM.DoLaserRing)
 
+--sigh, yea, this one needs yet another hook
 local laser_instantkill = function(mo, inf, src, dmg, dmgt)
 	--i hate magic numbers too but these arent listed in srb2's object list so uhh
 	if (not inf) or not (inf.type == MT_LASER or inf.type == 65 or inf.type == 530) then
