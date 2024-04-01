@@ -73,7 +73,7 @@ HM.DoGokuSatsu2 = function(mo1, mo2)
 	and mo2.player 
 	and not (mo2.satsugrabbed or mo2.satsued or mo1.satsuer or mo2.state == S_PLAY_DEAD)
 	then
-		if not (mo2.player.ctfteam == player.ctfteam and gametyperules & GTR_TEAMS) then
+		if not (mo2.player.ctfteam == mo1.player.ctfteam and gametyperules & GTR_TEAMS) then
 			S_StartSound(mo1, sfx_s3k4a)
 			mo2.satsugrabbed = TICRATE/2
 			mo1.satsugrabbing = mo2.satsugrabbed
