@@ -50,10 +50,22 @@ HM.DoLaserRing = function(player)
 		player.drawangle = mo.angle
 		mo.state = S_PLAY_FIRE
 		mo.state = leveltime%2==0 and S_PLAY_STND or S_PLAY_FIRE
-		if mo.target then A_Boss1Laser(mo, MT_LASER, 3) end
-		mo.state = mo.state == S_PLAY_FIRE and S_PLAY_STND or S_PLAY_FIRE
-		if mo.state == S_PLAY_FIRE then S_StartSound(mo, sfx_corkp) end
-		if mo.skin == "metalsonic" then --TEMPORARY!! PLS DELETE LATER
+		if mo.target then
+			if mo.skin == "necoarc" then
+				A_Boss1Laser(mo, MT_LASER, 0)
+				A_Boss1Laser(mo, MT_LASER, 1)
+			else
+				A_Boss1Laser(mo, MT_LASER, 3)
+			end
+		end
+		if not(mo.skin == "necoarc") then
+			mo.state = mo.state == S_PLAY_FIRE and S_PLAY_STND or S_PLAY_FIRE
+			if mo.state == S_PLAY_FIRE then S_StartSound(mo, sfx_corkp) end
+		else
+			mo.state = S_PLAY_FIRE
+			mo.frame = D
+		end
+		if mo.skin == "metalsonic" or mo.skin == "maimy" then
 			mo.state = S_PLAY_SPRING
 		end
 		P_Thrust(mo, player.drawangle, -mo.scale/3)
