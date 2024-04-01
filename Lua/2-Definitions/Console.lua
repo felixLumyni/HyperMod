@@ -7,3 +7,10 @@ HM.debug = function(player, args)
     end
 end
 COM_AddCommand("hm_debug", HM.debug, COM_ADMIN)
+
+HM.enabled = CV_RegisterVar{
+	name = "hm_enabled",
+	defaultvalue = 1,
+	flags = CV_NETVAR,
+	PossibleValue = CV_OnOff
+}

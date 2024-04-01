@@ -8,19 +8,19 @@ S[-1] = {
 	auxsounds={sfx_spc1},
 	spcost=100, --TODO
 	broadcast=true, --TODO
+	hypergraphic=nil,
 }
 S["sonic"] = {
 	hyper=HM.SonicSpeed,
 	warcry={sfx_ssx1,sfx_ssx2},
+	hypergraphic="XTRASS",
 }
 S["tails"] = {
-	hyper=nil, --TODO
-	spcost=20,
-	warcry=sfx_ts2,
+	hyper=HM.GokuSatsu,
+	warcry=sfx_tx1,
 }
 S["knuckles"] = {
 	hyper=HM.TakeThis,
-	spcost=50,
 	warcry=sfx_kx1,
 }
 S["amy"] = {

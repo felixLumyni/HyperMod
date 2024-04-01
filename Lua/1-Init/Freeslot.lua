@@ -6,7 +6,7 @@ freeslot(
     --sonc
     ,"sfx_ssx1","sfx_ssx2","sfx_ssx3"
     --tail
-    ,"sfx_ts1","sfx_ts2","sfx_ts3a","sfx_ts3b"
+    ,"sfx_tx1","sfx_tatsu"
     --sandwich
     ,"sfx_kx1","sfx_kx2a","sfx_kx2b","sfx_gdwn"
     ,"sfx_dig1","sfx_dig2","sfx_pnch" --xtra

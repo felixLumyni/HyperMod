@@ -25,9 +25,15 @@ HM.DoSonicSpeed = function(player)
 		return
 	end
 	if HM.higherthan(mo.sonicspeed, 0) then	
+		player.powers[pw_sneakers] = max($,mo.sonicspeed)
+		mo.eflags = $|MFE_FORCESUPER
 		player.sp = min(99,mo.sonicspeed/7)
 		mo.sonicspeed = $-1
 		mo.colorized = true
+		if mo.color == SKINCOLOR_BLUE then mo.color = SKINCOLOR_SKY end
+		if player.followmobj and player.followmobj.color == SKINCOLOR_BLUE then player.followmobj.color = SKINCOLOR_SKY end
+		--if AST_ADD then mo.blendmode = AST_ADD end
+		--if AST_ADD and player.followmobj then player.followmobj.blendmode = AST_ADD end
 		local g = P_SpawnGhostMobj(mo)
 		g.colorized = true
 		g.fuse = HM.higherthan(mo.sonicspeed, TICRATE*2) and 7 or 3
@@ -36,6 +42,15 @@ HM.DoSonicSpeed = function(player)
 		g.momy = $ + FixedMul(mo.scale, P_RandomFixed()*spd - P_RandomFixed()*spd)
 		g.momz = $ + FixedMul(mo.scale, P_RandomFixed()*spd - P_RandomFixed()*spd)/2
 		g.scale = mo.scale
+		if AST_ADD then g.blendmode = AST_ADD end
+		if HM.valid(g.tracer) then
+			g.tracer.colorized = true
+			g.tracer.tics = $/2
+			if AST_ADD then g.tracer.blendmode = AST_ADD end
+			g.tracer.momx = g.momx
+			g.tracer.momy = g.momy
+			g.tracer.momz = g.momz
+		end
 		if mo.state == S_PLAY_JUMP and player.pflags & PF_THOKKED and not player.actionstate then
 			player.justthokked = 3
 			player.pflags = $ &~ PF_THOKKED
@@ -45,16 +60,23 @@ HM.DoSonicSpeed = function(player)
 		if player.justthokked then
 			g.momz = $/8
 			g.shadowscale = mo.shadowscale
-			g.blendmode = AST_COPY and AST_COPY or 0
+			--if AST_ADD then g.blendmode = AST_ADD end
+			g.blendmode = 0
 			g.flags = $ &~ MF_NOGRAVITY
 			g.fuse = $*3/2
 			local actionspd = FixedMul(mo.scale, player.actionspd)
 			g.angle = P_RandomRange(0, 360) * ANG1
 			P_InstaThrust(g, g.angle, actionspd)
+			--g.frame = $|FF_TRANS90
 		end
 		player.charflags = $ | (SF_MULTIABILITY)
 		if mo.sonicspeed == 0 then
+			mo.eflags = $ &~ MFE_FORCESUPER
 			mo.colorized = false
+			mo.color = player.skincolor
+			if player.followmobj then player.followmobj.color = player.skincolor end
+			--mo.blendmode = 0
+			--if player.followmobj then player.followmobj.blendmode = 0 end
 			player.charflags = $ &~ (SF_MULTIABILITY)
 			P_RestoreMusic(player)
 		end

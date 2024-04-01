@@ -36,6 +36,9 @@ HM.DoTakeThis = function(player)
 					continue
 				end
 				if (mo2.player or mo2.flags & MF_ENEMY) then
+					if mo2.player and (mo2.player.ctfteam == player.ctfteam and gametyperules & GTR_TEAMS) then
+						continue
+					end
 					if P_IsObjectOnGround(mo2) then
 						if mo2.player then
 							mo2.player.rings = 0
@@ -66,6 +69,9 @@ HM.DoTakeThis = function(player)
 			for mo2 in mobjs.iterate() do
 				if (mo2.player or mo2.flags & MF_ENEMY) then
 					if mo == mo2 then
+						continue
+					end
+					if mo2.player and (mo2.player.ctfteam == player.ctfteam and gametyperules & GTR_TEAMS) then
 						continue
 					end
 					if not P_IsObjectOnGround(mo2) then

@@ -55,9 +55,12 @@ HM.DoChaosControl = function()
 		for p in players.iterate do
 			if HM.valid(p.mo) and not (p.spectator or p.mo == HM.zawarudomaker) then
 				p.cmd.buttons = 0
+				p.cmd.forwardmove = 0
+				p.cmd.sidemove = 0
 				p.exhaustmeter = p.storedexhaustmeter or 0
 				p.powers[pw_tailsfly] = p.storedfly or 0
 			end
+			--P_FlashPal(p, PAL_INVERT, 5)
 		end
 	end
 end

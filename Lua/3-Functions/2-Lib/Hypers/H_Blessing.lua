@@ -10,7 +10,7 @@ HM.Blessing = function(player)
 		for mo2 in mobjs.iterate() do
 			local sameteam = false
 			local p = mo2.player
-			if p and p.ctfteam == player.ctfteam and (p == player or gametyperules & GTR_TEAMS) then
+			if p and ((p.ctfteam == player.ctfteam and gametyperules & GTR_TEAMS) or p == player) then
 				if not p.powers[pw_shield] then
 					p.powers[pw_shield] = SH_PINK
 					P_SpawnShieldOrb(p)

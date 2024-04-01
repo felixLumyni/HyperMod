@@ -18,6 +18,9 @@ HM.doSpecialVfx = function(player)
 end
 
 HM.PlayerThink = function(player)
+	if not HM.enabled.value then
+		return
+	end
 	player.sp = $ or 0
 	if player.futuresp then
 		local smoothness = 2
@@ -80,7 +83,7 @@ local charDisplayX, charDisplayY, displaySpeed = 0
 local commonFlags = V_SNAPTOBOTTOM|V_SNAPTOLEFT|V_PERPLAYER|V_HUDTRANSDOUBLE
 
 HM.specialMeter = function(d, p)
-	if not HM.valid(p) then
+	if not (HM.valid(p) and HM.enabled.value) then
 		return
 	end
 	--sp meter
@@ -137,7 +140,8 @@ HM.specialMeter = function(d, p)
 		end
 	end
 	if HM.valid(specialplayer.realmo) then
-		local spritepatch = d.getSprite2Patch(specialplayer.realmo.skin, SPR2_XTRA, false, B)
+		local hypergraphic = (HM.valid(specialplayer.realmo) and S[specialplayer.realmo.skin]) and S[specialplayer.realmo.skin].hypergraphic or S[-1].hypergraphic
+		local spritepatch = hypergraphic and d.cachePatch(hypergraphic) or d.getSprite2Patch(specialplayer.realmo.skin, SPR2_XTRA, false, B)
 		local color2 = d.getColormap(TC_RAINBOW, specialplayer.skincolor)
 		d.draw(charDisplayX, charDisplayY+40, spritepatch, V_HUDTRANSHALF, color2)
 	end
@@ -153,7 +157,7 @@ end
 addHook("MapLoad", HM.resetstuff, MT_PLAYER)
 
 HM.spbonus = function(mo, inf, src, dmg, dmgt)
-	if not(HM.valid(mo) and HM.valid(src) and mo.player and src.player) then
+	if not(HM.valid(mo) and HM.valid(src) and mo.player and src.player and HM.enabled.value) then
 		return
 	end
 	if HM.valid(inf) and inf.player then
