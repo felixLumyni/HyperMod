@@ -1,7 +1,8 @@
 freeslot(
     --GENERAL
     "spr_bg"
-    ,"sfx_ready","sfx_spc1","sfx_spc2"
+    ,"sfx_ready","sfx_spc1","sfx_spc2","sfx_spc5"
+    ,"sfx_spc6","sfx_spc7","sfx_spc8","sfx_spc9"
     ,"S_PLAY_SPECIAL"
     --sonc
     ,"sfx_ssx1","sfx_ssx2","sfx_ssx3"
@@ -17,7 +18,7 @@ freeslot(
     ,"sfx_fs1","sfx_fs2","sfx_fs3"
     ,"sfx_lsr1","sfx_lsr2","sfx_lsr3" --xtra
     --tincan
-    ,"sfx_ms"
+    ,"sfx_ms","sfx_pipe"
     --edgelord
     ,"sfx_shsx1"
     ,"sfx_spear","sfx_tstp" --xtra

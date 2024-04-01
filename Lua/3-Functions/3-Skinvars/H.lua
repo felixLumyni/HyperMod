@@ -7,6 +7,12 @@ S["maimy"] = {
 	auxsounds={sfx_lsr1,sfx_lsr2},
 }
 
+S["marine"] = {
+	hyper=HM.LaserRing,
+	warcry=nil,
+	auxsounds={sfx_lsr1,sfx_lsr2},
+}
+
 S["shadow"] = {
 	hyper=HM.ChaosControl,
 	warcry=sfx_shsx1,
@@ -19,14 +25,24 @@ HM.inazumaload = function()
 		HM.inazumaloaded = true
 		S["inazuma"] = {
 			hyper=HM.UltraLightningBlast,
-			warcry={sfx_inlaz4},
+			warcry={sfx_inlaz4}, --reason he needs a hook
 		}
 	end
 end
 addHook("ThinkFrame", HM.inazumaload)
 
+S["heavy"] = {
+	hyper=HM.Dynamax,
+	warcry=sfx_pipe,
+	auxsounds={sfx_spc5}
+}
+
+S["mighty"] = {
+	hyper=HM.FalconPunch,
+	warcry=nil,
+	auxsounds={sfx_spc2}
+}
+
 --TODO: eggman: HM.brakify
 --TODO: eggette: HM.eggify
---TODO: mighty: HM.falconpunch
---TODO: heavy: HM.bigboi
 --TODO: blaze: HM.firetornado
