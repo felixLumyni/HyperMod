@@ -91,7 +91,7 @@ HM.specialMeter = function(d, p)
 			barColor = 130
 		end
 		local x=82
-		local y= (CBW_Battle and CBW_Battle.Arena and CBW_Battle.Arena.MyStocksHUD) and 198 or 186
+		local y=(CBW_Battle and CBW_Battle.Arena and CBW_Battle.Arena.MyStocksHUD) and 198 or 186
 		local meter = (HM.valid(p.mo) and p.mo.state == S_PLAY_SPECIAL) and 100 or p.sp
 		local width = (CBW_Battle and CBW_Battle.Arena and CBW_Battle.Arena.MyStocksHUD) and 3 or 8
 		d.drawFill(x, y-0, 100/2, width*3/4, commonFlags|138)

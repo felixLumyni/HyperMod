@@ -26,6 +26,7 @@ S["knuckles"] = {
 S["amy"] = {
 	hyper=HM.Blessing,
 	warcry={sfx_as1,sfx_as2},
+	auxsounds={sfx_spc1,sfx_lsr2}
 }
 S["fang"] = {
 	hyper=HM.LaserRing,

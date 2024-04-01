@@ -65,18 +65,6 @@ end
 
 --bruh
 
-HM.TimeTrans = function(time, speed)
-    speed = speed or 1
-    local level = (time / speed / 10) * 10
-    level = max(10, min(100, level))
-    
-    if level == 100 then
-        return nil
-    else
-        return _G["V_" .. (100 - level) .. "TRANS"]
-    end
-end
-
 HM.inahud = function(v, player, cam)
 	if player.inazumahudflash then	
 		local patch_prefix = "KYS"

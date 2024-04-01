@@ -7,26 +7,29 @@ HM.Blessing = function(player)
 	end
 	if player.usedspecial and not (mo.state == S_PLAY_SPECIAL) then
 		player.usedspecial = 0
-		for p in players.iterate do
+		for mo2 in mobjs.iterate() do
 			local sameteam = false
-			if p.ctfteam == player.ctfteam and gametyperules & GTR_TEAMS then
+			local p = mo2.player
+			if p and p.ctfteam == player.ctfteam and (p == player or gametyperules & GTR_TEAMS) then
 				if not p.powers[pw_shield] then
 					p.powers[pw_shield] = SH_PINK
 					P_SpawnShieldOrb(p)
 				end
-				if player.shieldmax then
-					for n = 1, player.shieldmax do
-						if not(player.shieldstock[n]) then
-							player.shieldstock[n] = SH_PINK
+				if p.shieldmax then
+					for n = 1, p.shieldmax do
+						if not(p.shieldstock[n]) then
+							p.shieldstock[n] = SH_PINK
 						end
 					end
 				end
-			elseif p.mo then
-				P_DamageMobj(p.mo, mo, mo, 1)
+			elseif p or (mo2.flags & MF_ENEMY) then
+				P_DamageMobj(mo2, mo, mo, 1)
 			end
 		end
 		S_StartSound(nil, sfx_god)
 		HM.amyhudflash = 100
+		player.sp = 89
+		player.futuresp = -player.sp
 	end
 end
 
@@ -80,8 +83,8 @@ HM.amyhud = function(v, player, cam)
 		end
 		--finally do the drawing
 		local patch = v.cachePatch("GOD")
-		local colormap = v.getColormap(TC_DEFAULT, SKINCOLOR_GOD)
-		shifttable(skincolors[SKINCOLOR_GOD].ramp)
+		local color = _G["SKINCOLOR_GOD"+HM.wrapValue((HM.amyhudflash/5)-2, 1, 16)]
+		local colormap = v.getColormap(TC_DEFAULT, color)
 		v.drawScaled(0, -40*FRACUNIT, idk, patch, flags|opacity, colormap)
 	end
 end
@@ -93,11 +96,3 @@ HM.amyhudflashthink = function(player)
 	end
 end
 addHook("ThinkFrame", HM.amyhudflashthink)
-
-local function shifttable(table)
-    local lastItem = table[#table]
-    for i = #table, 2, -1 do
-        table[i] = table[i - 1]
-    end
-    table[1] = lastItem
-end
