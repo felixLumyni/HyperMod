@@ -19,6 +19,12 @@ S["shadow"] = {
 	auxsounds={sfx_spc2}
 }
 
+S["silver"] = {
+	hyper=HM.ChaosControl,
+	warcry=nil,
+	auxsounds={sfx_spc2}
+}
+
 HM.inazumaloaded = false
 HM.inazumaload = function()
 	if skins["inazuma"] and not HM.inazumaloaded then
