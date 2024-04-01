@@ -24,8 +24,8 @@ HM.Blessing = function(player)
 			elseif p.mo then
 				P_DamageMobj(p.mo, mo, mo, 1)
 			end
-			S_StartSound(sfx_god)
 		end
+		S_StartSound(nil, sfx_god)
 		HM.amyhudflash = 100
 	end
 end
@@ -80,22 +80,24 @@ HM.amyhud = function(v, player, cam)
 		end
 		--finally do the drawing
 		local patch = v.cachePatch("GOD")
+		local colormap = v.getColormap(TC_DEFAULT, SKINCOLOR_GOD)
+		shifttable(skincolors[SKINCOLOR_GOD].ramp)
 		v.drawScaled(0, -40*FRACUNIT, idk, patch, flags|opacity, colormap)
 	end
 end
 hud.add(HM.amyhud, "game")
 
-HM.amyhudflash = function(player)
+HM.amyhudflashthink = function(player)
 	if HM.higherthan(HM.amyhudflash, 0) then
 		HM.amyhudflash = $-2
 	end
 end
-addHook("ThinkFrame", HM.amyhudflash)
+addHook("ThinkFrame", HM.amyhudflashthink)
 
-local function shiftNumbersForward(nums) --TODO
-    local lastNum = nums[#nums]
-    for i = #nums, 2, -1 do
-        nums[i] = nums[i - 1]
+local function shifttable(table)
+    local lastItem = table[#table]
+    for i = #table, 2, -1 do
+        table[i] = table[i - 1]
     end
-    nums[1] = lastNum
+    table[1] = lastItem
 end

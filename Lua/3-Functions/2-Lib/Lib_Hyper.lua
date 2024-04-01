@@ -110,15 +110,18 @@ HM.specialMeter = function(d, p)
 
 	--screen tint during special
 	local specialplayer = HM.specialplayer
-	if HM.valid(specialplayer) and HM.valid(specialplayer.mo) and specialplayer.mo.state == S_PLAY_SPECIAL then
+	if not HM.valid(specialplayer) then
+		return
+	end
+	if HM.valid(specialplayer.mo) and specialplayer.mo.state == S_PLAY_SPECIAL then
 		local color = d.getColormap(nil, specialplayer.skincolor)
 		if (leveltime % 3 == 0) then
 			d.drawScaled(0, -40*FRACUNIT, 82033, d.cachePatch("BGA0"), V_70TRANS|V_SNAPTOLEFT|V_SNAPTOTOP, color)
 		else
 			d.drawScaled(320*FRACUNIT, -40*FRACUNIT, 82033, d.cachePatch("BGA0"), V_80TRANS|V_SNAPTORIGHT|V_SNAPTOTOP|V_FLIP, color)
 		end
-		charDisplayX = min(350,$+displaySpeed)
-		displaySpeed = max(1,$-1)
+		charDisplayX = $ and min(350,$+displaySpeed) or -125
+		displaySpeed = $ and max(1,$-1) or 20
 		charDisplayY = 0 --sprite will be on screen
 		--hacky method i know, but damn it works (PLEASE DON'T KILL ME, THIS WAS MADE BEFORE I KNEW ABOUT EASING FUNCTIONS)
 	else
@@ -133,9 +136,11 @@ HM.specialMeter = function(d, p)
 			charDisplayY = 200 --sprite will be offscreen
 		end
 	end
-	local spritepatch = d.getSprite2Patch(specialplayer.realmo.skin, SPR2_XTRA, false, B)
-	local color2 = d.getColormap(TC_RAINBOW, specialplayer.skincolor)
-	d.draw(charDisplayX, charDisplayY+40, spritepatch, V_HUDTRANSHALF, color2)
+	if HM.valid(specialplayer.realmo) then
+		local spritepatch = d.getSprite2Patch(specialplayer.realmo.skin, SPR2_XTRA, false, B)
+		local color2 = d.getColormap(TC_RAINBOW, specialplayer.skincolor)
+		d.draw(charDisplayX, charDisplayY+40, spritepatch, V_HUDTRANSHALF, color2)
+	end
 end
 hud.add(HM.specialMeter, "game")
 
