@@ -14,3 +14,10 @@ HM.enabled = CV_RegisterVar{
 	flags = CV_NETVAR,
 	PossibleValue = CV_OnOff
 }
+
+HM.ring_gain = CV_RegisterVar{
+	name = "hm_rings_gain_meter",
+	defaultvalue = 1,
+	flags = CV_NETVAR,
+	PossibleValue = CV_OnOff
+}
