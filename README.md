@@ -9,6 +9,7 @@
 ## Special thanks
 - Inazuma
 - CyanKnight
+- Reverbal
 
 ## Resources used
 - SA2 voice lines
