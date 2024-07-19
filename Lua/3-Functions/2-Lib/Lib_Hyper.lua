@@ -50,11 +50,15 @@ HM.PlayerThink = function(player)
 			if voice and type(voice) == "table" and #voice then
     			voice = voice[P_RandomRange(1, #voice)]
 			end
-			if voice then S_StartSound(player.realmo, voice) end
+			if voice then 
+				--S_StartSound(player.realmo, voice) 
+				S_StartSound(nil, voice) 
+			end
 			local auxsounds = S[player.mo.skin] and S[player.mo.skin].auxsounds or S[-1].auxsounds
 			if auxsounds then
 				for sound=1, #auxsounds do
-					S_StartSound(player.realmo, auxsounds[sound])
+					--S_StartSound(player.realmo, auxsounds[sound])
+					S_StartSound(nil, auxsounds[sound])
 				end
 			end
 			player.powers[pw_nocontrol] = states[S_PLAY_SPECIAL].tics
@@ -167,3 +171,12 @@ HM.spbonus = function(mo, inf, src, dmg, dmgt)
 	end
 end
 addHook("MobjDamage", HM.spbonus, MT_PLAYER)
+
+
+addHook("TouchSpecial", function(sp, t)
+	if not HM.ring_gain.value then return end
+	if sp and (sp.type == MT_RING) or ( sp.type == MT_ITEM_BUBBLE )
+		and t and t.player then
+		t.player.sp = $ and min(100,$+2) or 2
+	end
+end)
